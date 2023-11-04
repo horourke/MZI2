@@ -5,18 +5,15 @@
 install.packages("MplusAutomation")
 library(MplusAutomation)
 
-
 # Set up file paths to switch easily between home/work - choose 1
+# "filepath" will be the directory to the folder where all simulated data will be stored
+
 # Home file path
-homepath <- "C:/Users/horourke/Dropbox (ASU)/Papers/O\'Rourke - MZI2/R&R/Analyses/"
+homepath <- "C:/myfiles/home/"
 filepath <- homepath
 # Work file path
-workpath <- "C:/Users/HO Wexford/Dropbox (ASU)/Papers/O\'Rourke - MZI2/R&R/Analyses/"
+workpath <- "C:/myfiles/work"
 filepath <- workpath
-
-#TEST PATH
-testpath <- "C:/Users/HO Wexford/Desktop/test/"
-filepath <- testpath
 
 
 # Factors and n values to iterate over
