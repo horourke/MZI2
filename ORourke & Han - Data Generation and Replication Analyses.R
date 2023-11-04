@@ -154,16 +154,16 @@ MODEL:
           m ON x*0.59 (a);
 
   MODEL CONSTRAINT:
-  NEW(x_0_c x_1_c x_0_z_old x_0_z_li x_1_z_old x_1_z_li);
+  NEW(x_0_c x_1_c x_0_ab_ll x_0_ab_lg x_1_ab_ll x_1_ab_lg);
 
   x_0_c = (a*bc)*exp(int_c + bc*m + cpc*0);
   x_1_c = (a*bc)*exp(int_c + bc*m + cpc*1);
 
-  x_0_z_old = a*bz*exp(int_z + bz*m + cpz*0);
-  x_0_z_li = a*bz*(exp(int_z + bz*m + cpz*0)/((1+exp(int_z + bz*m + cpz*0))^2));
+  x_0_ab_ll = a*bz*exp(int_z + bz*m + cpz*0);
+  x_0_ab_lg = a*bz*(exp(int_z + bz*m + cpz*0)/((1+exp(int_z + bz*m + cpz*0))^2));
 
-  x_1_z_old = a*bz*exp(int_z + bz*m + cpz*1);
-  x_1_z_li = a*bz*(exp(int_z + bz*m + cpz*1)/((1+exp(int_z + bz*m + cpz*1))^2));
+  x_1_ab_ll = a*bz*exp(int_z + bz*m + cpz*1);
+  x_1_ab_lg = a*bz*(exp(int_z + bz*m + cpz*1)/((1+exp(int_z + bz*m + cpz*1))^2));
   OUTPUT: CINTERVAL(bcbootstrap);
   OUTPUT: TECH1;
   SAVEDATA: RESULTS ARE %s%d_est_[[sample]].dat;', 
