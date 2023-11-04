@@ -1,0 +1,37 @@
+title:	Data Generation Script for ORourke & Han MC Simulation, ZINB n=100;
+montecarlo:			
+	names = x m y;
+	seed = 53487;
+	nobs = 100;
+	nreps = 500;
+	generate = y(nbi);
+    COUNT = y(nbi);
+    REPSAVE = ALL;
+	save = ZINB100_*.dat;
+ANALYSIS: 
+estimator=ml;
+integration=montecarlo;
+
+model population:
+        [m@0];
+        m@1;
+        [x@0];
+        x@0.25;
+  		y ON x*.01 m*0.14;
+   		[y@3];
+        y@1;
+        y#1 ON x*-.01 m*-0.14;
+  		[y#1@0];
+        m ON x*0.59;
+MODEL:
+        [m] (m);
+        m*1;
+   		[y*3] (int_c);
+        y*1;
+  		[y#1*0] (int_z);
+  		y ON x*.01 (cpc);
+        y ON m*0.14 (bc);
+        y#1 ON x*-.01 (cpz);
+        y#1 ON m*-0.14 (bz);
+        m ON x*0.59 (a);
+OUTPUT: TECH9;
