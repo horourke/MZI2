@@ -1,0 +1,45 @@
+[[init]]
+iterators = sample;
+sample = 1:500;
+filename = "ZINB_n100_[[sample]].inp";
+outputDirectory = "/home/horourke/mzi2/ZINB/N = 100";
+[[/init]]
+
+TITLE: CIE calculations for ZINB n=100 rep [[sample]];
+DATA:
+    File is ZINB100_[[sample]].dat;
+
+  VARIABLE:
+      NAMES = y m x;
+      USEVARIABLES = y m x;
+      count = y(nbi);
+ANALYSIS:
+  estimator=ml;
+  integration=montecarlo;
+  bootstrap=500;
+MODEL:
+          [m] (m);
+          m*1;
+            [y*3] (int_c);
+          y*1;
+            [y#1*0] (int_z);
+            y ON x*.01 (cpc);
+          y ON m*0.14 (bc);
+          y#1 ON x*-.01 (cpz);
+          y#1 ON m*-0.14 (bz);
+          m ON x*0.59 (a);
+
+  MODEL CONSTRAINT:
+  NEW(x_0_c x_1_c x_0_z_old x_0_z_li x_1_z_old x_1_z_li);
+
+  x_0_c = (a*bc)*exp(int_c + bc*m + cpc*0);
+  x_1_c = (a*bc)*exp(int_c + bc*m + cpc*1);
+
+  x_0_z_old = a*bz*exp(int_z + bz*m + cpz*0);
+  x_0_z_li = a*bz*(exp(int_z + bz*m + cpz*0)/((1+exp(int_z + bz*m + cpz*0))^2));
+
+  x_1_z_old = a*bz*exp(int_z + bz*m + cpz*1);
+  x_1_z_li = a*bz*(exp(int_z + bz*m + cpz*1)/((1+exp(int_z + bz*m + cpz*1))^2));
+  OUTPUT: CINTERVAL(bcbootstrap);
+  OUTPUT: TECH1;
+  SAVEDATA: RESULTS ARE ZINB100_est_[[sample]].dat;
